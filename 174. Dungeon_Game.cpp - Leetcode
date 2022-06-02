@@ -1,0 +1,36 @@
+class Solution {
+public:
+    /*
+    Here the approach is that for all the negative values I get I will convert them to positive while returning and adding 1 
+    to the last node while returning indicates that I need 1 more node than required.
+    */
+    int helper(vector<vector<int>>& mat,int i,int j,vector<vector<int>>& dp)
+    {
+        if(i>=mat.size() or j>=mat[0].size())
+            return INT_MAX; // out of bounds 
+        
+        if(dp[i][j]!=-1) // memoize
+            return dp[i][j];
+        
+        if(i==mat.size()-1 and j==mat[0].size()-1) 
+        {
+            return (mat[i][j]<=0) ? abs(mat[i][j])+1 : 1;
+        }
+        
+        int ans1=helper(mat,i+1,j,dp);
+        int ans2=helper(mat,i,j+1,dp);
+        
+        int ans=min(ans1,ans2)-mat[i][j]; // subtracting negative nodes will result in positive value
+        ans=(ans<=0)?1:ans; /* if at any node I find a value that makes my energy greater than one then from thare my energy again starts from 1 as I
+        have to find the least value of My energy that I need to start the finding game with, and If any any point My energy becomes greater than zero
+        means I needed energy to reach that point from the start, extra energy is provided by that +ve value in the cell
+        */
+        return dp[i][j]=ans;
+        
+    }
+    
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        vector<vector<int>> dp(dungeon.size(),vector<int>(dungeon[0].size(),-1));
+        return helper(dungeon,0,0,dp);
+    }
+};
