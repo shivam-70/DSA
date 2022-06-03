@@ -54,7 +54,7 @@ public:
             int rem=prefix%k;
             //If rem is negative we can convert it into positive by adding k
 			      //ex. -27 = -5*5 + (-2) or -27 = -6*5 +3
-            if(rem<0) 
+            if(rem<0)   //  since -1 mod 5 and 4 mod 5 are equivalent
                 rem+=k;
             if(mp.find(rem)!=mp.end())
             {
