@@ -1,0 +1,70 @@
+My initial approach was to use Prefix Sum method but ut would be of n^2 time complexity and the contraints will lead to TLE.
+
+
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        vector<int> prefix;
+        prefix.push_back(nums[0]);
+        int n=nums.size();
+        if(nums.size()==1)
+        {
+            if(nums[0]%k==0)
+                return 1;
+            else
+                return 0;
+        }
+        int ans=0;
+        if(prefix[0]%k==0)
+            ans++;
+        for(int i=1;i<n;i++)
+        {
+            int num=prefix[i-1]+nums[i];
+            if(num%k==0)
+                ans++;
+            prefix.push_back(num);
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                if((prefix[j]-prefix[i])%k==0)
+                    ans++;
+            }
+        }
+        return ans;
+    }
+};
+
+Efficient Approach:
+
+We kept track of remainders and evry time we come acros the same reaminder we found a subarray and we add the remainder's freq to our ans.
+
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int prefix=0;
+        map<int,int> mp;
+        // for 0 reminder.
+        mp[0]++;
+        int ans=0;
+        for(int it : nums)
+        {
+            prefix+=it;
+            int rem=prefix%k;
+            //If rem is negative we can convert it into positive by adding k
+			      //ex. -27 = -5*5 + (-2) or -27 = -6*5 +3
+            if(rem<0) 
+                rem+=k;
+            if(mp.find(rem)!=mp.end())
+            {
+                ans+=mp[rem];
+            }
+            mp[rem]++;
+        }
+        return ans;
+    }
+};
+
+First 3 mins will clear why we are using reaminder.
+https://www.youtube.com/watch?v=QM0klnvTQzk
