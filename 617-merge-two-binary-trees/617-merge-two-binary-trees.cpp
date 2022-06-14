@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode* ans;
+    TreeNode* ans; // so that it doesn't contain any garbage value 
     void helper(TreeNode* &ans,TreeNode* root1,TreeNode* root2)
     {
         if(!root1 and !root2)
