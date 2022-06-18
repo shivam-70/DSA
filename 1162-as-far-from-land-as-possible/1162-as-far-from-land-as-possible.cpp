@@ -1,5 +1,11 @@
 class Solution {
 public:
+    /*
+    we find our land cells and put surrounding water cells in the queue. We mark water cells as visited and 
+    continue the expansion from land cells until there are no more water cells left. In the end, the number 
+    of steps in DFS is how far can we go from the land.
+    */
+    
     int maxDistance(vector<vector<int>>& grid) {
         int ans=0;
         int n=grid.size();
