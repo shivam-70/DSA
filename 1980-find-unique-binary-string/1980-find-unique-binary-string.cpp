@@ -1,32 +1,11 @@
 class Solution {
 public:
-    unordered_map<string,bool> mp;
-    string ans;
-    
-    void helper(string str,vector<string>& nums)
-    {
-        if(str.length()==nums[0].length())
-        {
-            if(mp.find(str)==mp.end())
-            {
-                ans=str;
-                return;
-            }
-        }
-        else
-        {
-            helper(str+'0',nums);
-            helper(str+'1',nums);
-        }
-    }
-    
     string findDifferentBinaryString(vector<string>& nums) {
-        string str;
-        for(auto it : nums)
+        string ans="";
+        for(int i=0;i<nums.size();i++)
         {
-            mp[it]=true;
+            ans+=nums[i][i]=='0' ? '1' : '0';
         }
-        helper(str,nums);
         return ans;
     }
 };
