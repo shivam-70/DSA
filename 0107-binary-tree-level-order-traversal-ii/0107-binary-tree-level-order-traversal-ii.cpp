@@ -11,35 +11,31 @@
  */
 class Solution {
 public:
+    
+    int depth(TreeNode* root)
+    {
+        if(!root)
+            return 0;
+        int lh=depth(root->left);
+        int rh=depth(root->right);
+        return max(lh,rh)+1;
+    }
+    
+    void helper(vector<vector<int>>& ans,TreeNode* root,int level)
+    {
+        if(!root)
+            return;
+        ans[level].push_back(root->val);
+        helper(ans,root->left,level-1);
+        helper(ans,root->right,level-1);
+    }
+    
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-        vector<vector<int>> ans;
-        if(!root) return ans;
-        queue<TreeNode*> q;
-        q.push(root);
-        while(!q.empty())
-        {
-            vector<int> row;
-            int size=q.size();
-            for(int i=0;i<size;i++)
-            {
-                TreeNode* node=q.front();
-                q.pop();
-                row.push_back(node->val);
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }
-            ans.push_back(row);
-        }
-        for(auto it : ans)
-        {
-            for(auto itr : it)
-            {
-                cout<<itr<<" ";
-            }
-            cout<<endl;
-        }
-        reverse(ans.begin(),ans.end());
+        int d=depth(root);
+        vector<vector<int>> ans(d,vector<int>{});
+        if(!root)
+            return ans;
+        helper(ans,root,d-1);
         return ans;
     }
-    // return ans/;
 };
