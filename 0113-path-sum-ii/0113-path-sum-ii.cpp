@@ -15,29 +15,21 @@ public:
     void helper(TreeNode* root, int targetSum,vector<int>& tmpAns,vector<vector<int>>& ans)
     {
         if(!root) return;
+        tmpAns.push_back(root->val);
         if(!root->left and !root->right and root->val==targetSum) {
-            tmpAns.push_back(root->val);
             ans.push_back(tmpAns);
-            tmpAns.pop_back();
-            return;
-        }    
-        if(root->left)
+        }   
+        else
         {
-            tmpAns.push_back(root->val);
             helper(root->left,targetSum-root->val,tmpAns,ans);
-            tmpAns.pop_back();
-        }
-        if(root->right)
-        {
-            tmpAns.push_back(root->val);
             helper(root->right,targetSum-root->val,tmpAns,ans);
-            tmpAns.pop_back();
         }
+        tmpAns.pop_back();   
     }
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<vector<int>> ans;
-        if(!root) return ans;
+        // if(!root) return an///s;
         vector<int> tmpAns;
         helper(root,targetSum,tmpAns,ans);
         return ans;
